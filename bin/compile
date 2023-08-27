@@ -104,7 +104,16 @@ fi
 
 topic "Installing Google Chrome from the $channel channel."
 
-PACKAGES="$PACKAGES https://dl.google.com/linux/direct/google-chrome-${channel}_current_amd64.deb"
+chrome_version=""
+
+# Detect requested channel or default to stable
+if [ -f $ENV_DIR/CHROME_VERSION ]; then
+  chrome_version=$(cat $ENV_DIR/CHROME_VERSION)
+else
+  error "CHROME_VERSION can not be empty"
+fi
+
+PACKAGES="$PACKAGES https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_$chrome_version-1_amd64.deb"
 
 APT_CACHE_DIR="$CACHE_DIR/apt/cache"
 APT_STATE_DIR="$CACHE_DIR/apt/state"
